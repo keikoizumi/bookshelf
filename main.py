@@ -11,6 +11,8 @@ import time
 import json
 import os
 
+import admin
+
 
 #status
 PASTDAY = 'pastday'
@@ -41,7 +43,6 @@ def send_static_img(filename):
 @route("/")
 def index():
     return template('top')
-
 
 @post('/searchBook')
 def searchBook():
