@@ -117,7 +117,7 @@ def dbconn(qerytype, sendkey):
         if qerytype == ALL:
             sql = "SELECT site_id,title,url,img_id,CAST(dt AS CHAR) as dt FROM bookshelftable WHERE dt LIKE '"+sendkey+'%'"' ORDER BY dt DESC"
         elif qerytype == KEY:
-            sql = "SELECT id,category_id,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE title LIKE '%"+sendkey+'%'"'"
+            sql = "SELECT area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE title LIKE '%"+sendkey+'%'"'"
         elif qerytype == PASTDAY:
             sql = "SELECT DISTINCT img_id as dt FROM bookshelftable ORDER BY dt DESC"
         elif qerytype == DEL:

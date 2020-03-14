@@ -31,14 +31,38 @@ function searchBook(sendkey) {
         scriptCharset: 'utf-8',
       }).done(function(data){ 
           console.log(data);
+          console.log(data.length);
+
+          sflag = 0;
           $('#table').empty();
-          for(var i in data) {
-            $('#table').append('<tr><td>'+data[i].category_id+'</td><td>'+data[i].title+'</td><td>'+data[i].rental_status+'</td><td>'+data[i].rental_start_dt+'</td></tr>');
+
+          if (data.length == 0) {
+            $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">NO DATA</div></td></tr>');
+          } else {
+            for(var i in data) {
+              var status_img = "";
+              var rental_start_dt ="";
+
+              if (data[i].rental_status == 0) {   
+                status_img = '<img src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok"></img>';
+              } else {
+                status_img = '<img src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>';
+              }
+
+              if (data[i].rental_start_dt == null) {
+                rental_start_dt = 'ー';
+              } else {
+                rental_start_dt = data[i].rental_start_dt;
+              }
+
+              $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td><td>'+rental_start_dt+'</td></tr>');
+            }
           }
+      
         }).fail(function(data, XMLHttpRequest, textStatus) {
           console.log(data);
           $('#table').empty();
-          $('#table').append('<tr><td><div style="font-style: italic;color: #000000;font-size:xx-large ;font-weight: 700;">INFO</div></td><td><div style="font-style: italic;color: #FF3300;font-size:xx-large ;font-weight: 700;">FAILURE</div></td></tr>');
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #FF3300;font-size:x-large ;font-weight: 700;">FAILURE</div></td></tr>');
           sflag = 0;
           console.log("XMLHttpRequest : " + XMLHttpRequest.status);
           console.log("textStatus     : " + textStatus);
@@ -65,11 +89,11 @@ $(function(){
 
       $('#table').empty();
       $('#iimg').empty();
-      $('#table').append('<tr><td><div style="font-style: italic;color: #000000;font-size:xx-large ;font-weight: 700;">INFO</td><td><div style="font-style: italic;color: #0000FF;font-size:xx-large ;font-weight: 700;">RUNNING　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
+      $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
     } else {
       $('#table').empty();
       $('#iimg').empty();
-      $('#table').append('<tr><td><div style="font-style: italic;color: #000000;font-size:xx-large ;font-weight: 700;">INFO</td><td><div style="font-style: italic;color: #0000FF;font-size:xx-large ;font-weight: 700;">RUNNING NOW ( PLEASE WAIT A MINUTE )　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
+      $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING NOW ( PLEASE WAIT A MINUTE )　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
     }  
   });
 });

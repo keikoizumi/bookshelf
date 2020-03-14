@@ -5,7 +5,7 @@
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  
- <link rel="icon" href="./static/img/ico/favicon.ico">
+ <link rel="icon" href="./static/img/ico/book.ico">
 
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -17,120 +17,96 @@
 
   <!-- nav配置 -->
   
-  <nav class="navbar navbar-expand-md  navbar-light shadow sticky-top" style="background-color: rgb(1, 1, 1);">
-    <div class="navbar-brand"><img src="./static/img/ico/images.png" width="70" height="60" alt="ロゴ"></div>
-      <div class="d-inline-block mr-5" style="font-style: italic;color: aliceblue;font-size:xx-large ;font-weight: 700;">
-         Bookshelf
+  <nav class="navbar shadow sticky-top" style="background-color: white;">  
+    <div class="navbar-brand ml-3"><img src="./static/img/ico/book_icon.png" width="70" height="60" alt="ロゴ"></div>
+      <div class="mr-5" style="color: black;font-size:xx-large ;font-weight: 700;">
+        <div class="float-right">Bookshelf</div>
       </div>
-    <div class= "m-2 mt-3">
-      <div class="row">
-        <div class="float-right col-md">
-          <div class="d-inline-block">
-            <div class="m-2 ml-5">
-              <button type="button" class="btn btn-danger btn-lg shadow" data-toggle="modal" data-target="#exampleModal" style="font-weight: 600;">Book Search</button>
-            </div>
-          </div>
-          <div class="d-inline-block">
-            <div class="m-2">
-              <div class="other" id="all">
-                <a href="#" class="btn btn-primary btn-lg shadow" role="button" style="font-weight: 600;">TODAY'S DATA</a>
-              </div>
-            </div>
-          </div>
-          <div class="d-inline-block">
-            <div class="m-2">
-              <div class="dropdown">
-                <select id="ddmenu" class="btn btn-warning btn-lg shadow" style="font-weight: 600;">
-                  KEY WORDS
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="d-inline-block">
-            <div class="m-2">
-              <div class="csv">
-                <a href="#" class="btn btn-secondary btn-lg shadow"  role="button" onclick="output();return false;">CSV DOWNLOAD</a>
-              </div>
-            </div>
-          </div>
-          <div class="d-inline-block">
-            <div class="m-2">
-                <button type="button" id="del" class="btn btn-danger btn-lg shadow" style="font-weight: 600;">DELETE</button>              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </nav>
 
   <!-- データ配置 -->
 
-  <div class="container" >
-    
-    
-    <!-- データ配置 -->
+  <div class="container mt-4 pl-5 pr-5" >
 
+    <div class="input-group p-5">
+      <input id="key" type="text" class="form-control mr-3" placeholder="Book Name" aria-label="Search Book Name">
+      <div class="input-group-append">
+        <button type="button" id="start" class="btn btn-danger">Search</button>
+      </div>
+    </div>
+
+    <!-- データ配置 -->
     <div class="display-area">
-      <div class="m-5 mt-3">
+      <div class="ml-5 mr-5">
         <table class="table">
           <thead>
             <tr>
-              <th>Book Category</th>
-              <th>Book Title</th>
-              <th>Book Status</th>
+              <th>Area<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#areaInfo"></th>
+              <th>Title</th>
+              <th>Status<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#statusInfo"></th>
+              <th>Date<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#dateInfo"></th>
             </tr>
           </thead>
           <tbody id="table">
           </tbody>
         </table>
-        <div id="iimg"></div>
       </div>
       <!-- モーダル部分始まり -->
-  
-      <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+ 
+      <!-- モーダルの設定 -->
+      <div class="modal fade" id="areaInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="delete">Notice</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">delete</div>
-            <div class="modal-footer">
-              <button type="button" id="godel" class="btn btn-secondary" data-dismiss="modal">OK</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h5 class="modal-title">『 Area 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label"><b>Scraping key word</b></label>
-                  <input type="text" class="form-control" id="key">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                  <button type="button" id="start" class="btn btn-primary" data-dismiss="modal">START</button>
-                </div>
+              <p>モーダルのコンテンツ文。...</p>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="statusInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Status 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>モーダルのコンテンツ文。...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="dateInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Date 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>モーダルのコンテンツ文。...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- モーダル部分終わり -->
     </div>
   </div>
  <footer class="fixed-bottom" style="background-color: rgb(1, 1, 1);">
-  <div style="font-style: italic;color: aliceblue;font-size:larger;">© 2020 KEI inc. v2.0</div>
+  <div style="font-style: italic;color: aliceblue;font-size:larger;">© 2020 KEI v1.0</div>
  </footer>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
