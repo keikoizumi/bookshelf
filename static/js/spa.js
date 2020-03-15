@@ -13,10 +13,7 @@ function today() {
 }
 
 window.onload = function() {
-  //today
-  //var pastDate = null; 
-  //other(all,pastDate);
-  //getPastDay();
+  allBooks() 
 }
 
 function allBooks() {  
@@ -71,14 +68,14 @@ function allBooks() {
   });
 }
 
-function searchBook(sendkey) {  
+function searchBook(data) {  
   $(function(){
       var targetUrl = tUrl+'searchBook';
 
-      console.log(sendkey);
+      console.log(data);
 
       var request = {
-        'sendkey': sendkey
+        'data': data
       };
 
       $.ajax({
@@ -129,13 +126,17 @@ function searchBook(sendkey) {
 }
 
 //rentalInfo
-function rentalInfo(sendkey) {  
+function rentalInfo(data) {  
   $(function(){
       var targetUrl = tUrl+'rentalInfo';
+      console.log(data);
+
 
       var request = {
-        'sendkey': sendkey
+        'data': data
       };
+
+      console.log(data);
 
       $.ajax({
         url: targetUrl,
@@ -214,14 +215,40 @@ function rentalBook(request) {
   });
 }
 
+//returnBook
+function returnBook(request) {  
+  $(function(){
+      var targetUrl = tUrl+'returnBook';
+
+      $.ajax({
+        url: targetUrl,
+        type: 'POST',
+        contentType: 'application/JSON',
+        dataType: 'JSON',
+        data : JSON.stringify(request),
+        scriptCharset: 'utf-8',
+      }).done(function(data){ 
+          console.log(data);
+          allBooks()
+        }).fail(function(data, XMLHttpRequest, textStatus) {
+          console.log(data);
+          $('#table').empty();
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #FF3300;font-size:x-large ;font-weight: 700;">FAILURE</div></td></tr>');
+          sflag = 0;
+          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+          console.log("textStatus     : " + textStatus);
+      });
+  });
+}
+
 //searchBook
 $(function(){ 
   $('#start').on('click',function(){
     if (sflag == 0) {
       sflag = 1;
-      sendkey= $("#key").val();
-      console.log('sendkey');
-      searchBook(sendkey);
+      data= $("#key").val();
+      console.log('data');
+      searchBook(data);
 
       $('#table').empty();
       $('#iimg').empty();
@@ -235,19 +262,6 @@ $(function(){
   });
 });
 
-//rentalInfo
-$(function() {
-  $(document).on('click','.rentalInfocheck',function() {
-
-    sflag = 1;
-    sendkey =  $(this).attr("value");
-
-    console.log('sendkey');
-    console.log(sendkey);
-    rentalInfo(sendkey);
-
-  });
-});
 
 //rentalCheck
 $(function() {
@@ -256,7 +270,7 @@ $(function() {
     sflag = 1;
     id =  $(this).attr("value");
 
-    console.log('sendkey');
+    console.log('data');
     console.log(id);
 
     $('.rentalBook').val(id);
@@ -268,7 +282,7 @@ $(function() {
 $(function(){ 
   $(document).on('click','.rentalBook',function() {
     sflag == 0
-    //if (sflag == 0) {
+
       sflag = 1;
       console.log("click")
       id = $(".rentalBook").val();
@@ -285,14 +299,43 @@ $(function(){
       
       rentalBook(request);
 
-      //$('#table').empty();
-      //$('#iimg').empty();
-      //$('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
-    //} else {
-      //console.log("aaaaaaaaaaaaaaaaaa");
-      //$('#table').empty();
-      //$('#iimg').empty();
-      //$('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING NOW ( PLEASE WAIT A MINUTE )　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
-    //}  
+
+  });
+});
+
+//rentalInfo
+$(function() {
+  $(document).on('click','.rentalInfocheck',function() {
+
+    sflag = 1;
+    id =  $(this).attr("value");
+
+    console.log('data');
+    console.log(id);
+    rentalInfo(id);
+
+    $('.returnBook').val(id);
+
+  });
+});
+
+
+//returnBook
+$(function(){ 
+  $(document).on('click','.returnBook',function() {
+    sflag == 0
+ 
+      sflag = 1;
+      console.log("click")
+      id = $(".returnBook").val();
+
+      var request = {
+        'id': id
+      };
+      
+      console.log(request);
+      
+      returnBook(request);
+ 
   });
 });
