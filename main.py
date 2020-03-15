@@ -19,7 +19,7 @@ KEY = 'KEY'
 RENTALINFO = 'RENTALINFO'
 RENTAL = 'RENTAL'
 ALL = 'ALL'
-DEL = 'DEL'
+RETURN = 'RETURN'
 
 #ファイルパス
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -68,9 +68,9 @@ def allBooks():
 def searchBook():
     #値取得
     data = request.json
-    sendkey = data['sendkey']
+    data = data['data']
     qerytype = KEY
-    book = dbconn(qerytype, sendkey)
+    book = dbconn(qerytype, data)
 
     #ID NULLチェック
     if isBookCheck(book):
@@ -87,9 +87,12 @@ def searchBook():
 def rentalInfo():
     #値取得
     data = request.json
-    sendkey = data['sendkey']
+    print(data)
+    data = data['data']
+
+    
     qerytype = RENTALINFO
-    book = dbconn(qerytype, sendkey)
+    book = dbconn(qerytype, data)
 
     #ID NULLチェック
     if isBookCheck(book):
@@ -100,6 +103,7 @@ def rentalInfo():
         return jsonBook
     else:
         return None
+
 #rentalBook
 @post('/rentalBook')
 def rentalBook():
@@ -115,6 +119,23 @@ def rentalBook():
     jsonBook = makeJson(book)
 
     return jsonBook
+
+#returnBook
+@post('/returnBook')
+def returnBook():
+    #値取得
+    data = request.json
+    qerytype = RETURN
+
+    dbconn(qerytype, data)
+
+    book = {
+        'return': True
+    }
+    jsonBook = makeJson(book)
+
+    return jsonBook
+
 i = 0
 def isBookCheck(book):
     if book == None:
@@ -146,10 +167,10 @@ def isTypeCheck(jsonBook):
         jsonDumps(jsonBook)
     
 
-def dbconn(qerytype, sendkey):
+def dbconn(qerytype, data):
     print("q")
     print(qerytype)
-    print(sendkey)
+    print(data)
 
     f = open('./conf/prop.json', 'r')
     info = json.load(f)
@@ -171,37 +192,67 @@ def dbconn(qerytype, sendkey):
         if  qerytype == ALL:
             sql = "SELECT id,area,title,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
         elif qerytype == KEY:
-            sql = "SELECT id,area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+sendkey+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+            sql = "SELECT id,area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
         elif qerytype == RENTALINFO:
-            sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+sendkey+"'"
+            print(data)
+            sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+data+"'"
         elif qerytype == RENTAL:
-            #sql = "DELETE FROM bookshelftable where img_id = '"+sendkey+"'"
+            #sql = "DELETE FROM bookshelftable where img_id = '"+data+"'"
 
-            rentalid = sendkey['id']
+            rentalid = data['id']
 
             print(rentalid)
 
             rental_status = '1'
 
-            rental_user_name = sendkey['InputEmail1']
+            rental_user_name = data['InputEmail1']
             print(rental_user_name)
 
             now = datetime.datetime.now()
             rental_start_dt = "{0:%Y-%m-%d %H:%M:%S}".format(now)
  
-            rental_end_plan_dt = sendkey['inputDate']
+            rental_end_plan_dt = data['inputDate']
             print(rental_end_plan_dt)
 
             if rental_end_plan_dt == '':
-                rental_end_plan_dt = NULL
+                rental_end_plan_dt = None
 
-            sql="UPDATE bookshelf.books_info SET rental_status = '"+rental_status+"', rental_user_name = '"+rental_user_name+"',rental_start_dt = '"+rental_start_dt+"', rental_end_plan_dt = '"+rental_end_plan_dt+"', update_dt = '"+rental_start_dt+"' WHERE id = '"+rentalid+"'"
+            sql="UPDATE bookshelf.books_info SET rental_status = %s, rental_user_name = %s,rental_start_dt = %s, rental_end_plan_dt = %s, update_dt = %s WHERE id = %s"
         
-        print(sql)
+        elif qerytype == RETURN:
+
+            returnid = data['id']
+            print(returnid)
+
+            rental_status = '0'
+            print(rental_status)
+
+            rental_user_name = None
+            print(rental_user_name)
+
+            rental_start_dt = None
+            print(rental_start_dt)
+
+            rental_end_plan_dt = None
+            print(rental_end_plan_dt)
+
+            now = datetime.datetime.now()
+            update_dt = "{0:%Y-%m-%d %H:%M:%S}".format(now)
+
+            print(update_dt)
+
+            sql="UPDATE bookshelf.books_info SET rental_status = %s, rental_user_name = %s,rental_start_dt = %s, rental_end_plan_dt = %s, update_dt = %s WHERE id = %s"
+            #sql="UPDATE bookshelf.books_info SET rental_status = 0'"+rental_status+'WHERE id = "'+returnid+'"'
+
+            print(sql)
+
 
         #クエリ発行
         if qerytype == RENTAL:
-            cur.execute(sql)
+            cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,rental_start_dt,rentalid))
+            conn.commit()
+        elif qerytype == RETURN:
+            cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,update_dt,returnid))
             conn.commit()
         else:
             cur.execute(sql)
