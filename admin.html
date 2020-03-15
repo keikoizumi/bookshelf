@@ -28,40 +28,43 @@
 
   <!-- データ配置 -->
 
-  <div class="container" >
+  <div class="container bt-5 pb-5" >
     <div class= "m-2 mt-3">
       <div class="row">
         <div class="float-right col-md">
           <div class="d-inline-block">
             <div class="m-2 ml-5">
-              <button type="button" class="btn btn-danger btn-lg shadow" data-toggle="modal" 
-              data-target="#exampleModal" style="font-weight: 600;">Add Book</button>
+              <button type="button" class="btn btn-success btn-lg" data-toggle="modal" 
+              data-target="#registrationInfo" style="font-weight: 600;">Add Book</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- データ配置 -->
-
+    <!-- テーブル配置 -->
     <div class="display-area">
-      <div class="m-5 mt-3">
+      <div class="ml-5 mr-5">
         <table class="table">
           <thead>
             <tr>
-              <th>Book Category</th>
-              <th>Book Title</th>
-              <th>Book Status</th>
+              <th>Area<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#areaInfo"></th>
+              <th>Title</th>
+              <th>Status<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#statusInfo"></th>
+              <th>User<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#renralUserInfo"></th>
+              <th>Date<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#dateInfo"></th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody id="table">
           </tbody>
         </table>
-        <div id="iimg"></div>
       </div>
+
       <!-- モーダル部分始まり -->
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="registrationInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -71,9 +74,35 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group">          
-                <label for="inputArea"><b>Area</b><span style="color: tomato;">*</span></label>
-                <input type="text" class="form-control" id="inputArea" placeholder="Area" required>
+              <div class="form-group">
+                <label for="exampleSelect1exampleFormControlSelect1"><b>Area</b><span style="color: tomato;">*</span></label>
+                <select class="form-control" id="inputArea" required>
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>A3</option>
+                  <option>A4</option>
+                  <option>A5</option>
+                  <option>B1</option>
+                  <option>B2</option>
+                  <option>B3</option>
+                  <option>B4</option>
+                  <option>B5</option>
+                  <option>C1</option>
+                  <option>C2</option>
+                  <option>C3</option>
+                  <option>C4</option>
+                  <option>C5</option>
+                  <option>D1</option>
+                  <option>D2</option>
+                  <option>D3</option>
+                  <option>D4</option>
+                  <option>D5</option>
+                  <option>E1</option>
+                  <option>E2</option>
+                  <option>E3</option>
+                  <option>E4</option>
+                  <option>E5</option>
+                </select>
               </div>
               <div class="form-group">          
                 <label for="inputTitle"><b>Title</b><span style="color: tomato;">*</span></label>
@@ -87,20 +116,129 @@
                 <label for="inputPublisher"><b>Publisher</b></label>
                 <input type="text" class="form-control" id="inputPublisher" placeholder="Publisher">
               </div>
+              <!-- 
               <div class="form-group">
                 <label for="inputURL"><b>URL</b></label>
                 <input type="text" class="form-control" id="inputURL" placeholder="URL">
               </div>
+               -->
+              <button id="regBook" class="btn btn-primary float-right" data-dismiss="modal">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- モーダルの設定 -->
+      <div class="modal fade" id="areaInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Area 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>本の収納区画を表します</p>
+              <p><center><img class="mr-2 mb-1" src="./static/img/ico/book_area.jpeg" width="320" height="270" alt="rental ok"></img></center></center></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="statusInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Status 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok">本の貸出しが可能な状態です</img></p>
+              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>本の貸出しが不可能な状態です</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="renralUserInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 User 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>本を借りているユーザーを表示します</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="dateInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Date 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>本が貸し出された日です</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Book Edit</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="exampleSelect1exampleFormControlSelect1"><b>Area</b><span style="color: tomato;">*</span></label>
+                <select class="form-control" id="editArea" required>
+                </select>
+              </div>
+              <div class="form-group">          
+                <label for="inputTitle"><b>Title</b><span style="color: tomato;">*</span></label>
+                <input type="text" class="form-control" id="editTitle" placeholder="Title" required>
+              </div>
+              <div class="form-group">
+                <label for="inputAuthor"><b>Author</b></label>
+                <input type="text" class="form-control" id="editAuthor" placeholder="Author">
+              </div>
+              <div class="form-group">
+                <label for="inputPublisher"><b>Publisher</b></label>
+                <input type="text" class="form-control" id="editPublisher" placeholder="Publisher">
+              </div>
+              <!-- 
+              <div class="form-group">
+                <label for="inputURL"><b>URL</b></label>
+                <input type="text" class="form-control" id="editURL" placeholder="URL">
+              </div>
+               -->
               <button id="regBook" class="btn btn-primary float-right" data-dismiss="modal">Send</button>
             </div>
           </div>
         </div>
       </div>
       <!-- モーダル部分終わり -->
+
     </div>
   </div>
  <footer class="fixed-bottom" style="background-color: rgb(1, 1, 1);">
-  <div style="color: aliceblue;font-size:larger;">© 2020 KEI v1.0</div>
+  <div style="color: aliceblue;font-size:larger;">© 2020 v1.0</div>
  </footer>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

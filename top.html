@@ -9,7 +9,9 @@
 
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
- 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" />
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 <title>Bookshelf</title> 
 
 </head>
@@ -35,7 +37,7 @@
       </div>
     </div>
 
-    <!-- データ配置 -->
+    <!-- テーブル配置 -->
     <div class="display-area">
       <div class="ml-5 mr-5">
         <table class="table">
@@ -44,13 +46,13 @@
               <th>Area<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#areaInfo"></th>
               <th>Title</th>
               <th>Status<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#statusInfo"></th>
-              <th>Date<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#dateInfo"></th>
             </tr>
           </thead>
           <tbody id="table">
           </tbody>
         </table>
       </div>
+
       <!-- モーダル部分始まり -->
  
       <!-- モーダルの設定 -->
@@ -88,23 +90,58 @@
         </div>
       </div>
 
-      <div class="modal fade" id="dateInfo" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal fade" id="rentalInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">『 Date 』の説明</h5>
+              <h2 class="modal-title">Rental Infomation</h2>
               <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>本が貸し出された日です</p>
+              <p><b>User</b> : <span id="rental_user_name"></span></p>
+              <p><b>Rental start day </b> : <span id="rental_start_dt"></span></p>
+              <p><b>Expected return date </b> : <span id="rental_end_plan_dt"></span></p>
             </div>
           </div>
         </div>
       </div>
 
+      <div class="modal fade" id="rentalregistration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Book Rental</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="InputEmail1"><b>Email</b><span style="color: tomato;">*</span></label>
+                <input type="email" class="form-control" id="InputEmail1"  placeholder="you@example.com" required>
+              </div>
+              <div class="form-group">          
+                <label for="inputTitle"><b>Expected return date</b></label>
+                <div class="form-group">
+                  <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                      <input id="inputDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"/>
+                      <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+              <button class="rentalBook btn btn-primary float-right" data-dismiss="modal">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
       <!-- モーダル部分終わり -->
+      
     </div>
   </div>
  <footer class="fixed-bottom" style="background-color:white">
@@ -115,7 +152,20 @@
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
+  <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            locale: 'ja'
+        });
+    });
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
   <!--独自js-->
   <script src="/static/js/spa.js"></script>
   </body>

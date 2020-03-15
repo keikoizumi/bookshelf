@@ -14,7 +14,7 @@ import os
 INS = 'INS'
 ALL = 'ALL'
 KEY = 'key'
-DEL = 'del'
+DEL = 'DEL'
 
 #ファイルパス
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -49,17 +49,29 @@ def regBook():
     data = request.json
     qerytype = INS
 
-    book = admindbconn(qerytype, data)
+    admindbconn(qerytype, data)
 
-    #ID NULLチェック
-    if isBookCheck(book):
-        print('checkedbook:')
-        #json作成
-        jsonBook = makeJson(book)
-        print(type(jsonBook))
-        return 'OK'
-    else:
-        return None
+    book = {
+        'return': True
+    }
+    jsonBook = makeJson(book)
+
+    return jsonBook
+
+@post('/delBook')
+def delBook():
+    #値取得
+    data = request.json
+    qerytype = DEL
+
+    admindbconn(qerytype, data)
+
+    book = {
+        'return': True
+    }
+    jsonBook = makeJson(book)
+
+    return jsonBook
 
 @post('/allBooks')
 def allBooks():
@@ -109,7 +121,6 @@ def isTypeCheck(jsonBook):
     else:
         jsonDumps(jsonBook)
     
-
 def admindbconn(qerytype, data):
     print("q")
     print(qerytype)
@@ -118,6 +129,7 @@ def admindbconn(qerytype, data):
     f = open('./conf/prop.json', 'r')
     info = json.load(f)
     f.close()
+   
     #DB設定
     
     conn = mysql.connector.connect(
@@ -129,37 +141,46 @@ def admindbconn(qerytype, data):
     )
     
     cur = conn.cursor(dictionary=True)   
-            
+
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
     try:    
         #接続クエリ
         if qerytype == INS:
+            print("ccccccccccccccccccccccccccccccccccccccccccccccccccc")
             area = data['area']
+            print(area)
             title = data['title']
+            print(title)
+            #url = data['url']
             author = data['author']
             publisher = data['publisher']
-            url = data['url']
+            
             now = datetime.datetime.now()
             create_dt = "{0:%Y-%m-%d %H:%M:%S}".format(now)
+            update_dt = "{0:%Y-%m-%d %H:%M:%S}".format(now)
 
-            print(area)
-
-            sql = "INSERT INTO bookshelf.books_info(category_id,area,title,url,img_id,author,publisher,rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,del_flg,create_dt,update_dt) VALUES (null,%s,%s,%s,null,%s,%s,0,null,null,null,0,%s,%s)"
-
+            # sql = "INSERT INTO bookshelf.books_info(category_id,area,title,url,img_id,author,publisher,rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,del_flg,create_dt,update_dt) VALUES (null,%s,%s,%s,null,%s,%s,0,null,null,null,0,%s,%s)"
+            sql = "INSERT INTO bookshelf.books_info(category_id,area,title,url,img_id,author,publisher,rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,del_flg,create_dt,update_dt) VALUES (null,'"+area+"','"+title+"',null,null,'"+author+"','"+publisher+"',0,null,null,null,0,'"+create_dt+"','"+update_dt+"')"
+            print(sql)       
         elif qerytype == KEY:
             sql = "SELECT area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE title LIKE '%"+sendkey+'%'"'"
         elif qerytype == ALL:
-            sql = "SELECT area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info ORDER BY update_dt DESC"
+            sql = "SELECT id,area,title,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
         elif qerytype == DEL:
-            sql = "DELETE FROM bookshelftable where img_id = '"+sendkey+"'"
-        
-        print(sql)
+            delid = data['delid']
+            print(delid)    
+            sql = "UPDATE books_info SET del_flg = 1 WHERE id = '"+delid+"'"
+
 
         #クエリ発行
         if qerytype == DEL:
             cur.execute(sql)
             conn.commit()
         elif qerytype == INS:
-            cur.execute(sql, (area, title, author, publisher, url, create_dt, create_dt)) 
+            print("クエリ発行")
+            #cur.execute(sql, (area, title, author, publisher, url, create_dt, create_dt)) 
+            cur.execute(sql)
             conn.commit()
         else:
             cur.execute(sql)

@@ -15,10 +15,11 @@ import admin
 
 
 #status
-PASTDAY = 'pastday'
-ALL = 'all'
-KEY = 'key'
-DEL = 'del'
+KEY = 'KEY'
+RENTALINFO = 'RENTALINFO'
+RENTAL = 'RENTAL'
+ALL = 'ALL'
+DEL = 'DEL'
 
 #ファイルパス
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -44,6 +45,25 @@ def send_static_img(filename):
 def index():
     return template('top')
 
+@post('/allBooks')
+def allBooks():
+    #値取得
+    data = request.json
+    qerytype = ALL
+
+    book = dbconn(qerytype, data)
+
+    #ID NULLチェック
+    if isBookCheck(book):
+        print('checkedbook:')
+        #json作成
+        jsonBook = makeJson(book)
+        print(type(jsonBook))
+        return jsonBook
+    else:
+        return None
+
+#searchBook
 @post('/searchBook')
 def searchBook():
     #値取得
@@ -62,6 +82,39 @@ def searchBook():
     else:
         return None
 
+#rentalInfo
+@post('/rentalInfo')
+def rentalInfo():
+    #値取得
+    data = request.json
+    sendkey = data['sendkey']
+    qerytype = RENTALINFO
+    book = dbconn(qerytype, sendkey)
+
+    #ID NULLチェック
+    if isBookCheck(book):
+        print('checkedbook:')
+        #json作成
+        jsonBook = makeJson(book)
+        print(type(jsonBook))
+        return jsonBook
+    else:
+        return None
+#rentalBook
+@post('/rentalBook')
+def rentalBook():
+    #値取得
+    data = request.json
+    qerytype = RENTAL
+
+    dbconn(qerytype, data)
+
+    book = {
+        'return': True
+    }
+    jsonBook = makeJson(book)
+
+    return jsonBook
 i = 0
 def isBookCheck(book):
     if book == None:
@@ -115,19 +168,39 @@ def dbconn(qerytype, sendkey):
     
     try:    
         #接続クエリ
-        if qerytype == ALL:
-            sql = "SELECT site_id,title,url,img_id,CAST(dt AS CHAR) as dt FROM bookshelftable WHERE dt LIKE '"+sendkey+'%'"' ORDER BY dt DESC"
+        if  qerytype == ALL:
+            sql = "SELECT id,area,title,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
         elif qerytype == KEY:
-            sql = "SELECT area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE title LIKE '%"+sendkey+'%'"'"
-        elif qerytype == PASTDAY:
-            sql = "SELECT DISTINCT img_id as dt FROM bookshelftable ORDER BY dt DESC"
-        elif qerytype == DEL:
-            sql = "DELETE FROM bookshelftable where img_id = '"+sendkey+"'"
+            sql = "SELECT id,area,title,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+sendkey+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+        elif qerytype == RENTALINFO:
+            sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+sendkey+"'"
+        elif qerytype == RENTAL:
+            #sql = "DELETE FROM bookshelftable where img_id = '"+sendkey+"'"
+
+            rentalid = sendkey['id']
+
+            print(rentalid)
+
+            rental_status = '1'
+
+            rental_user_name = sendkey['InputEmail1']
+            print(rental_user_name)
+
+            now = datetime.datetime.now()
+            rental_start_dt = "{0:%Y-%m-%d %H:%M:%S}".format(now)
+ 
+            rental_end_plan_dt = sendkey['inputDate']
+            print(rental_end_plan_dt)
+
+            if rental_end_plan_dt == '':
+                rental_end_plan_dt = NULL
+
+            sql="UPDATE bookshelf.books_info SET rental_status = '"+rental_status+"', rental_user_name = '"+rental_user_name+"',rental_start_dt = '"+rental_start_dt+"', rental_end_plan_dt = '"+rental_end_plan_dt+"', update_dt = '"+rental_start_dt+"' WHERE id = '"+rentalid+"'"
         
         print(sql)
 
         #クエリ発行
-        if qerytype == DEL:
+        if qerytype == RENTAL:
             cur.execute(sql)
             conn.commit()
         else:
@@ -148,4 +221,4 @@ def dbconn(qerytype, sendkey):
 
 
 if __name__ == "__main__":
-    run(host='localhost', port=8086, reloader=True, debug=True)
+    run(host='localhost', port=8087, reloader=True, debug=True)

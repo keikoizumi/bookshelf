@@ -1,6 +1,6 @@
 //グローバル変数
 var items = [];
-var tUrl = 'http://localhost:8086/';
+var tUrl = 'http://localhost:8087/';
 var all = 'all';
 var key = 'key';
 var sflag = 0;
@@ -10,6 +10,65 @@ function today() {
   var d = new Date();
   var formatted = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
   return formatted;
+}
+
+window.onload = function() {
+  //today
+  //var pastDate = null; 
+  //other(all,pastDate);
+  //getPastDay();
+}
+
+function allBooks() {  
+  $(function(){
+      var targetUrl = tUrl+'allBooks';
+      request = 'all'
+      console.log(request);
+
+      $.ajax({
+        url: targetUrl,
+        type: 'POST',
+        contentType: 'application/JSON',
+        dataType: 'JSON',
+        data : JSON.stringify(request),
+        scriptCharset: 'utf-8',
+      }).done(function(data){ 
+        console.log(data);
+        console.log(data.length);
+
+        sflag = 0;
+        $('#table').empty();
+
+        if (data.length == 0) {
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">NO DATA</div></td></tr>');
+        } else {
+          for(var i in data) {
+            var status_img = "";
+            var rental_start_dt ="";
+
+            if (data[i].rental_status == 0) {   
+              status_img = '<img class="rentalCheck" value="'+data[i].id+'" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok" data-toggle="modal" data-target="#rentalregistration"></img>';
+            } else {
+              status_img = '<img class="rentalInfocheck" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img>';
+            }
+            if (data[i].rental_start_dt == null) {
+              rental_start_dt = 'ー';
+            } else {
+              rental_start_dt = data[i].rental_start_dt;
+            }
+
+            $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td></tr>');
+          }
+        }
+        }).fail(function(data, XMLHttpRequest, textStatus) {
+          console.log(data);
+          $('#table').empty();
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #FF3300;font-size:x-large ;font-weight: 700;">FAILURE</div></td></tr>');
+          sflag = 0;
+          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+          console.log("textStatus     : " + textStatus);
+      });
+  });
 }
 
 function searchBook(sendkey) {  
@@ -44,18 +103,17 @@ function searchBook(sendkey) {
               var rental_start_dt ="";
 
               if (data[i].rental_status == 0) {   
-                status_img = '<img src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok"></img>';
+                status_img = '<img class="rentalCheck" value="'+data[i].id+'" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok" data-toggle="modal" data-target="#rentalregistration"></img>';
               } else {
-                status_img = '<img src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>';
+                status_img = '<img class="rentalInfocheck" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img>';
               }
-
               if (data[i].rental_start_dt == null) {
                 rental_start_dt = 'ー';
               } else {
                 rental_start_dt = data[i].rental_start_dt;
               }
 
-              $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td><td>'+rental_start_dt+'</td></tr>');
+              $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td></tr>');
             }
           }
       
@@ -70,12 +128,90 @@ function searchBook(sendkey) {
   });
 }
 
+//rentalInfo
+function rentalInfo(sendkey) {  
+  $(function(){
+      var targetUrl = tUrl+'rentalInfo';
 
-window.onload = function() {
-  //today
-  //var pastDate = null; 
-  //other(all,pastDate);
-  //getPastDay();
+      var request = {
+        'sendkey': sendkey
+      };
+
+      $.ajax({
+        url: targetUrl,
+        type: 'POST',
+        contentType: 'application/JSON',
+        dataType: 'JSON',
+        data : JSON.stringify(request),
+        scriptCharset: 'utf-8',
+      }).done(function(data){ 
+          console.log(data);
+          console.log(data.length);
+
+          sflag = 0;
+          $('#rental_user_name').empty();
+          $('#rental_start_dt').empty();
+          $('#rental_end_plan_dt').empty();
+
+          if (data.length == 0) {
+            $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">NO DATA</div></td></tr>');
+          } else {
+
+            if (data[0].rental_user_name =="" || data[0].rental_user_name == null) {
+              $('#rental_user_name').append("No Infomation");
+            } else {
+              $('#rental_user_name').append(data[0].rental_user_name);
+            }
+
+            if (data[0].rental_start_dt == "" || data[0].rental_start_dt == null) {
+              $('#rental_start_dt').append("No Infomation");
+            } else {
+              $('#rental_start_dt').append(data[0].rental_start_dt);
+            }
+
+            if (data[0].rental_end_plan_dt == "" || data[0].rental_end_plan_dt == null) {
+              $('#rental_end_plan_dt').append("No Infomation");
+            } else {
+              $('#rental_end_plan_dt').append(data[0].rental_end_plan_dt);
+            }
+            
+          }
+      
+        }).fail(function(data, XMLHttpRequest, textStatus) {
+          console.log(data);
+          $('#table').empty();
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #FF3300;font-size:x-large ;font-weight: 700;">FAILURE</div></td></tr>');
+          sflag = 0;
+          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+          console.log("textStatus     : " + textStatus);
+      });
+  });
+}
+
+//rentalBook
+function rentalBook(request) {  
+  $(function(){
+      var targetUrl = tUrl+'rentalBook';
+
+      $.ajax({
+        url: targetUrl,
+        type: 'POST',
+        contentType: 'application/JSON',
+        dataType: 'JSON',
+        data : JSON.stringify(request),
+        scriptCharset: 'utf-8',
+      }).done(function(data){ 
+          console.log(data);
+          allBooks()
+        }).fail(function(data, XMLHttpRequest, textStatus) {
+          console.log(data);
+          $('#table').empty();
+          $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</div></td><td><div style="color: #FF3300;font-size:x-large ;font-weight: 700;">FAILURE</div></td></tr>');
+          sflag = 0;
+          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+          console.log("textStatus     : " + textStatus);
+      });
+  });
 }
 
 //searchBook
@@ -91,6 +227,7 @@ $(function(){
       $('#iimg').empty();
       $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
     } else {
+      console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
       $('#table').empty();
       $('#iimg').empty();
       $('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING NOW ( PLEASE WAIT A MINUTE )　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
@@ -98,5 +235,64 @@ $(function(){
   });
 });
 
+//rentalInfo
+$(function() {
+  $(document).on('click','.rentalInfocheck',function() {
 
+    sflag = 1;
+    sendkey =  $(this).attr("value");
 
+    console.log('sendkey');
+    console.log(sendkey);
+    rentalInfo(sendkey);
+
+  });
+});
+
+//rentalCheck
+$(function() {
+  $(document).on('click','.rentalCheck',function() {
+
+    sflag = 1;
+    id =  $(this).attr("value");
+
+    console.log('sendkey');
+    console.log(id);
+
+    $('.rentalBook').val(id);
+
+  });
+});
+
+//rentalBook
+$(function(){ 
+  $(document).on('click','.rentalBook',function() {
+    sflag == 0
+    //if (sflag == 0) {
+      sflag = 1;
+      console.log("click")
+      id = $(".rentalBook").val();
+      InputEmail1 = $("#InputEmail1").val();
+      inputDate = $("#inputDate").val();
+
+      var request = {
+        'id': id
+        , 'InputEmail1': InputEmail1
+        , 'inputDate': inputDate
+      };
+      
+      console.log(request);
+      
+      rentalBook(request);
+
+      //$('#table').empty();
+      //$('#iimg').empty();
+      //$('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
+    //} else {
+      //console.log("aaaaaaaaaaaaaaaaaa");
+      //$('#table').empty();
+      //$('#iimg').empty();
+      //$('#table').append('<tr><td><div style="color: #000000;font-size:x-large ;font-weight: 700;">INFO</td><td><div color: #0000FF;font-size:x-large ;font-weight: 700;">RUNNING NOW ( PLEASE WAIT A MINUTE )　<img src="./static/img/ico/load.gif" width="30" height="30" /></div></td></tr>');
+    //}  
+  });
+});
