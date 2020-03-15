@@ -28,7 +28,7 @@
 
   <!-- データ配置 -->
 
-  <div class="container mt-4 pl-5 pr-5" >
+  <div class="container mt-4 pl-5 pr-5" style="background-color: #f5f5f5;">
 
     <div class="input-group p-5">
       <input id="key" type="text" class="form-control mr-3" placeholder="Book Name" aria-label="Search Book Name">
@@ -84,7 +84,9 @@
             </div>
             <div class="modal-body">
               <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok">本の貸出しが可能な状態です</img></p>
+              <p>アイコンをクリックすることで本を借りることができます</p>
               <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>本の貸出しが不可能な状態です</p>
+              <p>アイコンをクリックすることで本を返すことができます</p>
             </div>
           </div>
         </div>
@@ -139,11 +141,70 @@
           </div>
         </div>
       </div>
+    </div>
 
-      </div>
+
       <!-- モーダル部分終わり -->
       
-    </div>
+    <!-- カーセル -->
+
+        <div class="d-inline-block">
+        
+        <div class="carcell p-5 d-inline-block" style="width: 450px">
+          <div class="d-inline-block">
+            <h2>New Book Infomation</h2>
+            <div class="carousel slide pt-3" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <p><b>Title</b><p>
+                  <p>【図解】コレ1枚でわかる最新ITトレンド[新装改訂3版]</p>
+                  <img src="./static/img/ico/sample1.webp" alt="new book Infomation 1" >
+                </div>
+                <div class="carousel-item">
+                  <p><b>Title</b><p>
+                  <p>IT用語図鑑 ビジネスで使える厳選キーワード256</p>
+                  <img src="./static/img/ico/sample2.webp" alt="new book Infomation 2">
+                </div>
+                <div class="carousel-item">
+                  <p><b>Title</b><p>
+                  <p>【令和2年度】 いちばんやさしいITパスポート 絶対合格の教科書+</br>出る順問題集</p>
+                  <img src="./static/img/ico/sample3.webp" alt="new book Infomation 3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="carcell p-5 d-inline-block" style="width: 450px">
+          <div class="d-inline-block">
+            <h2>Recommended books</h2>
+            <div class="carousel slide pt-3" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <p><b>Title</b><p>
+                  <p>【図解】コレ1枚でわかる最新ITトレンド[新装改訂3版]</p>
+                  <img src="./static/img/ico/sample4.webp" alt="Recommended books 1">
+                </div>
+                <div class="carousel-item">
+                  <p><b>Title</b><p>
+                  <p>IT用語図鑑 ビジネスで使える厳選キーワード256</p>
+                  <img src="./static/img/ico/sample5.webp" alt="Recommended books 2">
+                </div>
+                <div class="carousel-item">
+                  <p><b>Title</b><p>
+                  <p>【令和2年度】 いちばんやさしいITパスポート 絶対合格の教科書+</br>出る順問題集</p>
+                  <img src="./static/img/ico/sample6.webp" alt="Recommended books 3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    
+
+
+    <div>
   </div>
  <footer class="fixed-bottom" style="background-color:white">
   <div style="color: black;font-size:larger;">© 2020 Bookshelf 1.0</div>
@@ -167,7 +228,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+
   <!--独自js-->
   <script src="/static/js/spa.js"></script>
+
   </body>
 </html>

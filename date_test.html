@@ -28,6 +28,22 @@
 
   <!-- データ配置 -->
 
+  <div class="my-sample">
+    <div id="example-4" class="carousel slide" data-interval="2000" data-ride="carousel" style="width:400px">
+      <div class="carousel-inner">
+        <div class="carousel-item">
+          <div class="my-carousel">First slide</div>
+        </div>
+        <div class="carousel-item active">
+          <div class="my-carousel">Second slide</div>
+        </div>
+        <div class="carousel-item">
+          <div class="my-carousel">Third slide</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
@@ -55,11 +71,34 @@
                     locale: 'ja'
                 });
             });
+
+
+            $(document).ready(function () {
+  var mySwiper = new Swiper ('.swiper-container', {
+    direction: 'vertical',
+    loop: true
+  })        
+});
         </script>
       <!-- モーダル部分終わり -->
       
     </div>
   </div>
+  <div class="carousel slide" data-interval=2000 data-ride="carousel" style="width:400px">
+    :
+  </div>
+
+  <div class="swiper-container">
+    <ul class="swiper-wrapper">
+        <li class="swiper-slide">Slide 1</li>
+        <li class="swiper-slide">Slide 2</li>
+        <li class="swiper-slide">Slide 3</li>
+    </ul>
+    <div class="swiper-pagination"></div> 
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>   
+    <div class="swiper-scrollbar"></div>
+</div>
  <footer class="fixed-bottom" style="background-color:white">
   <div style="color: black;font-size:larger;">© 2020 KEI v1.0</div>
  </footer>
@@ -71,6 +110,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.x.x/css/swiper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.x.x/js/swiper.js"></script>
   <!--独自js-->
   <script src="/static/js/spa.js"></script>
   </body>

@@ -13,7 +13,7 @@ function today() {
 }
 
 window.onload = function() {
-  allBooks() 
+  //allBooks() 
 }
 
 function allBooks() {  
@@ -110,7 +110,7 @@ function searchBook(data) {
                 rental_start_dt = data[i].rental_start_dt;
               }
 
-              $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td></tr>');
+              $('#table').append('<tr><td>'+data[i].area+'</td><td class="highlight">'+data[i].title+'</td><td>'+status_img+'</td></tr>');
             }
           }
       
