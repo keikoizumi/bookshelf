@@ -72,3 +72,7 @@
     100% {  transform: rotate(359deg); }
   }
   
+  .cursorhand {
+    cursor: hand;
+    cursor:pointer;
+  }

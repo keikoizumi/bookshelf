@@ -10,15 +10,18 @@
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" />
-<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" />
+ <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+
+ <!-- 独自 CSS -->
+ <link rel="stylesheet" type="text/css" href="./static/css/spa.css">
 <title>Bookshelf</title> 
 
 </head>
 <body>
 
   <!-- nav配置 -->
-  
+
   <nav class="navbar shadow sticky-top" style="background-color: white;">  
     <div class="navbar-brand ml-3"><img src="./static/img/ico/book_icon.png" width="70" height="60" alt="ロゴ"></div>
       <div class="mr-5" style="color: black;font-size:xx-large ;font-weight: 700;">
@@ -28,12 +31,12 @@
 
   <!-- データ配置 -->
 
-  <div class="container mt-4 pl-5 pr-5" style="background-color: #f5f5f5;">
+  <div class="container mt-4 pl-5 pr-5" style="background-color: white;">
 
     <div class="input-group p-5">
-      <input id="key" type="text" class="form-control mr-3" placeholder="Book Name" aria-label="Search Book Name">
+      <input id="key" type="text" class="form-control" placeholder="Book Name" aria-label="Search Book Name">
       <div class="input-group-append">
-        <button type="button" id="start" class="btn btn-danger">Search</button>
+        <button type="button" id="start" class="btn btn"><img  src="./static/img/ico/search.jpeg" width="26" height="26" alt="Search"></button>
       </div>
     </div>
 
@@ -43,9 +46,26 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Area<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#areaInfo"></th>
-              <th>Title</th>
-              <th>Status<img class="mb-1 ml-2" src="./static/img/ico/info.jpeg" width="12" height="12" alt="info" data-toggle="modal" data-target="#statusInfo"></th>
+              <th>Area
+                <span data-toggle="tooltip" data-placement="top" title="click here">
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#areaInfo"></img>
+                </span>
+              </th>
+              <th>Title
+                <span data-toggle="tooltip" data-placement="top" title="click here">
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#titleInfo"></img>
+                </span>
+              </th>
+              <th>Status
+                <span data-toggle="tooltip" data-placement="top" title="click here">
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#statusInfo"></img>
+                </span>
+              </th>
+              <th>Link
+                <span data-toggle="tooltip" data-placement="top" title="click here">
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#linkInfo"></img>
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody id="table">
@@ -73,6 +93,22 @@
         </div>
       </div>
 
+      <div class="modal fade" id="titleInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Title 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>本のタイトルを表示します</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="modal fade" id="statusInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -83,10 +119,29 @@
               </button>
             </div>
             <div class="modal-body">
-              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok">本の貸出しが可能な状態です</img></p>
-              <p>アイコンをクリックすることで本を借りることができます</p>
-              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>本の貸出しが不可能な状態です</p>
-              <p>アイコンをクリックすることで本を返すことができます</p>
+              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok">本の貸出しが可能な状態</img></p>
+              <p>▹アイコンをクリックすることで本を借りることができます</p>
+              <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>本の貸出しが不可能な状態</p>
+              <p>▹アイコンをクリックすることで本を返すことができます</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="linkInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">『 Link 』の説明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><img class="mr-2 mb-1" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link">外部リンクへ遷移可能な状態</img></p>
+              <p>▹アイコンをクリックすることで外部リンクへ遷移します</p>
+              <p><img class="mr-2 mb-1" src="./static/img/ico/dead_link.jpeg" width="17" height="17" alt="dead link"></img>外部リンクへ遷移不可能な状態</p>
+              <p>▹外部リンクはありません</p>
             </div>
           </div>
         </div>
@@ -146,19 +201,18 @@
 
       <!-- モーダル部分終わり -->
       
-    <!-- カーセル -->
-    <table class="m-5">
-      <thead>
-        <tr>
-          <th><h3 class="pt-5 pr-5 pl-5">New Book</h4></th>
-          <th><h3 class="pt-5 pr-5 pl-5">Recommend Book</h4></th>
-        </tr>
-      </thead>
+    <!-- カー セル 
+  <div class="table-responsive">
+    <table class="table table-borderless">
       <tbody>
         <tr>
+          <td><h3 class="pt-5 pr-5 pl-5">New Book</h3></td>
+          <td><h3 class="pt-5 pr-5 pl-5">Recommend Book</h3></td>
+        </tr>
+        <tr>
           <td>
-            <div class="carcell p-5 d-inline-block" data-interval="150000" style="width: 400px">
-              <div class="d-inline-block">
+            <div class="carcell p-5" data-interval="200000" style="width: 400px">
+              <div class="">
                 <div class="carousel slide pt-3" data-ride="carousel">
                   <div class="carousel-inner" style="width: 300px">
                     <div class="carousel-item active">
@@ -179,8 +233,8 @@
             </div>    
           </td>
           <td>
-            <div class="carcell p-5 d-inline-block" data-interval="150000" style="width: 400px">
-              <div class="d-inline-block">
+            <div class="carcell p-5" data-interval="200000" style="width: 400px">
+              <div class="">
                 <div class="carousel slide pt-3" data-ride="carousel">
                   <div class="carousel-inner" style="width: 300px">
                     <div class="carousel-item active">
@@ -203,9 +257,9 @@
         </tr>
       </tbody>
     </table>
-
+  </div>
         
-        
+-->      
       
    
     
@@ -219,8 +273,9 @@
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+  <!-- Datetimepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -228,7 +283,6 @@
         });
     });
   </script>
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
@@ -236,7 +290,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
-
+  <!-- Tooltip -->
+  <script>
+    $('[data-toggle="tooltip"]').tooltip()
+  </script>
 
   <!--独自js-->
   <script src="/static/js/spa.js"></script>
