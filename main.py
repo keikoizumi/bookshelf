@@ -192,7 +192,9 @@ def dbconn(qerytype, data):
         if  qerytype == ALL:
             sql = "SELECT id,area,title,url,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
         elif qerytype == KEY:
-            sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+            # sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+            sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND CONCAT(title,author,publisher) LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+        
         elif qerytype == RENTALINFO:
             print(data)
             sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+data+"'"
