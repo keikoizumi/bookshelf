@@ -47,7 +47,7 @@ function allBooks() {
             if (data[i].rental_status == 0) {   
               status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalCheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok" data-toggle="modal" data-target="#rentalregistration"></img></span>';
             } else {
-              status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img><span style="color: rgba(225, 10, 10, 0.844);">&nbsp;貸出中</span></span>';
+              status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img><small style="color: rgba(225, 10, 10, 0.844);">&nbsp;&nbsp;貸出中</small></span>';
             }
 
             if (data[i].url == "" || data[i].url == null) {
@@ -99,7 +99,7 @@ function searchBook(data) {
               if (data[i].rental_status == 0) {   
                 status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalCheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok" data-toggle="modal" data-target="#rentalregistration"></img></span>';
               } else {
-                status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img><span style="color: rgba(225, 10, 10, 0.844);">&nbsp;貸出中</span></span>';
+                status_img = '<span data-toggle="tooltip" data-placement="top" title="click here"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng" data-toggle="modal" data-target="#rentalInfo"></img><small style="color: rgba(225, 10, 10, 0.844);">&nbsp;&nbsp;貸出中</small></span>';
               }
               if (data[i].url == "" || data[i].url == null) {
                 link_img = '<div><img class="rentalInfocheck" value="'+data[i].id+'" src="./static/img/ico/dead_link.jpeg" width="17" height="17" alt="dead link"></img>';
