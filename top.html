@@ -24,16 +24,14 @@
 
   <nav class="navbar shadow sticky-top" style="background-color: white;">  
     <div class="navbar-brand ml-3"><img src="./static/img/ico/book_icon.png" width="70" height="60" alt="ロゴ"></div>
-      <div class="mr-5" style="color: black;font-size:xx-large ;font-weight: 700;">
+      <div class="mr-5" style="color: #6598c2;font-size:xx-large ;font-weight: 700;">
         <div class="float-right">Bookshelf</div>
       </div>
   </nav>
-
   <!-- データ配置 -->
-
   <div class="container mt-4 pl-5 pr-5" style="background-color: white;">
 
-    <div class="input-group p-5">
+    <div class="input-group pt-5 pb-5">
       <input id="key" type="text" class="form-control" placeholder="Book Name" aria-label="Search Book Name">
       <div class="input-group-append">
         <button type="button" id="start" class="btn btn"><img  src="./static/img/ico/search.jpeg" width="26" height="26" alt="Search"></button>
@@ -41,8 +39,8 @@
     </div>
 
     <!-- テーブル配置 -->
-    <div class="display-area mb-5">
-      <div class="ml-5 mr-5">
+    <div class="display-area">
+      <div class="">
         <table class="table">
           <thead>
             <tr>
@@ -120,9 +118,9 @@
             </div>
             <div class="modal-body">
               <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ok.jpeg" width="17" height="17" alt="rental ok">本の貸出しが可能な状態</img></p>
-              <p>▹アイコンをクリックすることで本を借りることができます</p>
+              <p>&nbsp;▹アイコンをクリックすることで本を借りることができます</p>
               <p><img class="mr-2 mb-1" src="./static/img/ico/rental_ng.jpeg" width="17" height="17" alt="rental ng"></img>本の貸出しが不可能な状態</p>
-              <p>▹アイコンをクリックすることで本を返すことができます</p>
+              <p>&nbsp;▹アイコンをクリックすることで本を返すことができます</p>
             </div>
           </div>
         </div>
@@ -139,9 +137,9 @@
             </div>
             <div class="modal-body">
               <p><img class="mr-2 mb-1" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link">外部リンクへ遷移可能な状態</img></p>
-              <p>▹アイコンをクリックすることで外部リンクへ遷移します</p>
+              <p>&nbsp;▹アイコンをクリックすることで外部リンクへ遷移します</p>
               <p><img class="mr-2 mb-1" src="./static/img/ico/dead_link.jpeg" width="17" height="17" alt="dead link"></img>外部リンクへ遷移不可能な状態</p>
-              <p>▹外部リンクはありません</p>
+              <p>&nbsp;▹外部リンクはありません</p>
             </div>
           </div>
         </div>
@@ -160,6 +158,7 @@
               <p><b>User</b> : <span id="rental_user_name"></span></p>
               <p><b>Rental start day </b> : <span id="rental_start_dt"></span></p>
               <p><b>Expected return date </b> : <span id="rental_end_plan_dt"></span></p>
+              <small>本を返却した場合は<b>Return Book</b>を押してください</small>
               <button class="returnBook btn btn-primary float-right" data-dismiss="modal">Return Book</button>
             </div>
           </div>
@@ -177,6 +176,7 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
+                <small>Emailと本の返却予定日を入力し<b>Send</b>ボタンを押してください</small></br></br>
                 <label for="InputEmail1"><b>Email</b><span style="color: tomato;">*</span></label>
                 <input type="email" class="form-control" id="InputEmail1"  placeholder="you@example.com" required>
               </div>
@@ -189,7 +189,7 @@
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
                   </div>
-              </div>
+              </div>           
               </div>
               <button class="rentalBook btn btn-primary float-right" data-dismiss="modal">Send</button>
             </div>
@@ -201,53 +201,85 @@
 
       <!-- モーダル部分終わり -->
       
-    <!-- カー セル 
+    <!-- カー セル -->
+
+  <div class="mt-5"style="padding: 10px; margin-bottom: 10px; border: 1px dotted #333333;">
+    
+    <h2 style="color: #6598c2;"><b><img class="ml-2 mr-2 mb-4" src="./static/img/ico/new.png" width="55" height="30" >Books</b></h2>
   <div class="table-responsive">
     <table class="table table-borderless">
       <tbody>
         <tr>
-          <td><h3 class="pt-5 pr-5 pl-5">New Book</h3></td>
-          <td><h3 class="pt-5 pr-5 pl-5">Recommend Book</h3></td>
-        </tr>
-        <tr>
           <td>
-            <div class="carcell p-5" data-interval="200000" style="width: 400px">
+            <div class="carcell">
               <div class="">
-                <div class="carousel slide pt-3" data-ride="carousel">
-                  <div class="carousel-inner" style="width: 300px">
+                <div class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
                     <div class="carousel-item active">
-                      <p style="width: 250px">【図解】コレ1枚でわかる最新ITトレンド[新装改訂3版]</p>
-                      <img style="width: 250px" src="./static/img/ico/sample1.webp" alt="new book Infomation 1" >
+                      <!--<p style="width: 250px">【図解】コレ1枚でわかる最新ITトレンド[新装改訂3版]</p>-->
+                      <img src="./static/img/ico/sample1.webp" alt="new book Infomation 1" >
                     </div>
                     <div class="carousel-item">
-                      <p style="width: 250px">IT用語図鑑 ビジネスで使える厳選キーワード256</p>
-                      <img style="width: 250px" src="./static/img/ico/sample2.webp" alt="new book Infomation 2">
+                      <!--<p style="width: 250px">IT用語図鑑 ビジネスで使える厳選キーワード256</p>-->
+                      <img src="./static/img/ico/sample2.webp" alt="new book Infomation 2">
                     </div>
                     <div class="carousel-item">
-                      <p style="width: 250px">【令和2年度】 いちばんやさしいITパスポート 絶対合格の教科書 出る順問題集</p>
-                      <img style="width: 250px" src="./static/img/ico/sample3.webp" alt="new book Infomation 3">
+                      <!--<p style="width: 250px">【令和2年度】 いちばんやさしいITパスポート 絶対合格の教科書 出る順問題集</p>-->
+                      <img src="./static/img/ico/sample3.webp" alt="new book Infomation 3">
                     </div>
                   </div>
                 </div>
               </div>
             </div>    
+          </td>  
+          <td>
+            <div class="carcell">
+              <div class="">
+                <div class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                       <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
+                      <img src="./static/img/ico/sample6.webp" alt="Recommended books 1">
+                    </div>
+                    <div class="carousel-item">
+                      <!--<p style="width: 250px">【令和2年度】 いちばんやさしいITパスポート 絶対合格の教科書 出る順問題集</p>-->
+                      <img src="./static/img/ico/sample3.webp" alt="new book Infomation 3">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
           <td>
-            <div class="carcell p-5" data-interval="200000" style="width: 400px">
+            <div class="carcell">
               <div class="">
-                <div class="carousel slide pt-3" data-ride="carousel">
-                  <div class="carousel-inner" style="width: 300px">
+                <div class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
                     <div class="carousel-item active">
-                      <p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>
-                      <img style="width: 250px" src="./static/img/ico/sample4.webp" alt="Recommended books 1">
+                       <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
+                      <img src="./static/img/ico/sample5.webp" alt="Recommended books 1">
                     </div>
                     <div class="carousel-item">
-                      <p style="width: 250px">Design It! ―プログラマーのためのアーキテクティング入門</p>
-                      <img style="width: 250px" src="./static/img/ico/sample5.webp" alt="Recommended books 2">
+                      <!--<p style="width: 250px">IT用語図鑑 ビジネスで使える厳選キーワード256</p>-->
+                      <img src="./static/img/ico/sample2.webp" alt="new book Infomation 2">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="carcell">
+              <div class="">
+                <div class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                       <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
+                      <img src="./static/img/ico/sample4.webp" alt="Recommended books 1">
                     </div>
                     <div class="carousel-item">
-                      <p style="width: 250px">キタミ式イラストIT塾 基本情報技術者 令和02年 (情報処理技術者試験)</p>
-                      <img style="width: 250px" src="./static/img/ico/sample6.webp" alt="Recommended books 3">
+                      <!--<p style="width: 250px">IT用語図鑑 ビジネスで使える厳選キーワード256</p>-->
+                      <img src="./static/img/ico/sample3.webp" alt="new book Infomation 2">
                     </div>
                   </div>
                 </div>
@@ -258,8 +290,7 @@
       </tbody>
     </table>
   </div>
-        
--->      
+</div> 
       
    
     
