@@ -158,7 +158,7 @@
               <p><b>User</b> : <span id="rental_user_name"></span></p>
               <p><b>Rental start day </b> : <span id="rental_start_dt"></span></p>
               <p><b>Expected return date </b> : <span id="rental_end_plan_dt"></span></p>
-              <small>本を返却した場合は<b>Return Book</b>を押してください</small>
+              <small style="color: rgba(225, 10, 10, 0.844);">本を返却した場合は<b>Return Book</b>を押してください</small></br></br>
               <button class="returnBook btn btn-primary float-right" data-dismiss="modal">Return Book</button>
             </div>
           </div>
@@ -176,7 +176,6 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <small>Emailと本の返却予定日を入力し<b>Send</b>ボタンを押してください</small></br></br>
                 <label for="InputEmail1"><b>Email</b><span style="color: tomato;">*</span></label>
                 <input type="email" class="form-control" id="InputEmail1"  placeholder="you@example.com" required>
               </div>
@@ -189,7 +188,8 @@
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
                   </div>
-              </div>           
+              </div> 
+              <small style="color: rgba(225, 10, 10, 0.844);">Emailと本の返却予定日を入力し<b>Send</b>ボタンを押してください</small></br></br>          
               </div>
               <button class="rentalBook btn btn-primary float-right" data-dismiss="modal">Send</button>
             </div>
@@ -203,7 +203,7 @@
       
     <!-- カー セル -->
 
-  <div class="mt-5"style="padding: 10px; margin-bottom: 10px; border: 1px dotted #333333;">
+  <div class="mt-5 mb-5"style="padding: 10px; margin-bottom: 10px; border: 1px dotted #333333;">
     
     <h2 style="color: #6598c2;"><b><img class="ml-2 mr-2 mb-4" src="./static/img/ico/new.png" width="55" height="30" >Books</b></h2>
   <div class="table-responsive">
