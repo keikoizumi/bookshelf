@@ -53,7 +53,7 @@ function allBooks() {
             if (data[i].url == "" || data[i].url == null) {
               link_img = '<div><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/dead_link.jpeg" width="17" height="17" alt="dead link"></img>';
             } else {
-              link_img = '<a href="data[i].url"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link"></img>';
+              link_img = '<a href="'+data[i].url+'" target="_blank"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link"></img></a>';
             }
 
             $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td><td>'+link_img+'</td></tr>');
@@ -104,7 +104,7 @@ function searchBook(data) {
               if (data[i].url == "" || data[i].url == null) {
                 link_img = '<div><img class="rentalInfocheck" value="'+data[i].id+'" src="./static/img/ico/dead_link.jpeg" width="17" height="17" alt="dead link"></img>';
               } else {
-                link_img = '<img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link"></img>';
+                link_img = '<a href="'+data[i].url+'" target="_blank"><img class="rentalInfocheck cursorhand" value="'+data[i].id+'" src="./static/img/ico/link.jpeg" width="17" height="17" alt="link"></img></a>';
               }
 
               $('#table').append('<tr><td>'+data[i].area+'</td><td>'+data[i].title+'</td><td>'+status_img+'</td><td>'+link_img+'</td></tr>');
@@ -234,7 +234,6 @@ function returnBook(request) {
 //searchBook
 $(function(){ 
   $('#start').on('click',function(){
-    if (sflag == 0) {
       sflag = 1;
       data= $("#key").val();
       console.log('data');
@@ -242,11 +241,6 @@ $(function(){
       $('#table').empty();
       $('#iimg').empty();
       $('#table').append(RUNNING);
-    } else {
-      $('#table').empty();
-      $('#iimg').empty();
-      $('#table').append(RUNNING_NOW);
-    }  
   });
 });
 
