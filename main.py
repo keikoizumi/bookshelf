@@ -190,14 +190,15 @@ def dbconn(qerytype, data):
     try:    
         #接続クエリ
         if  qerytype == ALL:
-            sql = "SELECT id,area,title,url,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
+            #sql = "SELECT id,area,title,url,rental_status,rental_user_name,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
+            sql = "SELECT id,area,title,url,rental_status FROM bookshelf.books_info WHERE del_flg = 0 ORDER BY update_dt DESC"
         elif qerytype == KEY:
-            # sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND title LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
-            sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND CONCAT(title,author,publisher) LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
-        
+            #sql = "SELECT id,area,title,url,rental_status,CAST(rental_start_dt AS CHAR) as rental_start_dt FROM bookshelf.books_info WHERE del_flg = 0 AND CONCAT(title,author,publisher) LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
+            sql = "SELECT id,area,title,url,rental_status FROM bookshelf.books_info WHERE del_flg = 0 AND CONCAT(title,author,publisher) LIKE '%"+data+'%'"' ORDER BY create_dt DESC LIMIT 100 "
         elif qerytype == RENTALINFO:
             print(data)
-            sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+data+"'"
+            #sql = "SELECT id,rental_user_name, CAST(rental_start_dt AS CHAR) as rental_start_dt, CAST(rental_end_plan_dt AS CHAR) as rental_end_plan_dt FROM bookshelf.books_info WHERE id = '"+data+"'"
+            sql = "SELECT id FROM bookshelf.books_info WHERE id = '"+data+"'"
         elif qerytype == RENTAL:
             #sql = "DELETE FROM bookshelftable where img_id = '"+data+"'"
 
@@ -219,7 +220,8 @@ def dbconn(qerytype, data):
             if rental_end_plan_dt == '':
                 rental_end_plan_dt = None
 
-            sql="UPDATE bookshelf.books_info SET rental_status = %s, rental_user_name = %s,rental_start_dt = %s, rental_end_plan_dt = %s, update_dt = %s WHERE id = %s"
+           # sql="UPDATE bookshelf.books_info SET rental_status = %s, rental_user_name = %s,rental_start_dt = %s, rental_end_plan_dt = %s, update_dt = %s WHERE id = %s"
+            sql="UPDATE bookshelf.books_info SET rental_status = %s, update_dt = %s WHERE id = %s"
         
         elif qerytype == RETURN:
 
@@ -243,7 +245,7 @@ def dbconn(qerytype, data):
 
             print(update_dt)
 
-            sql="UPDATE bookshelf.books_info SET rental_status = %s, rental_user_name = %s,rental_start_dt = %s, rental_end_plan_dt = %s, update_dt = %s WHERE id = %s"
+            sql="UPDATE bookshelf.books_info SET rental_status = %s, update_dt = %s WHERE id = %s"
             #sql="UPDATE bookshelf.books_info SET rental_status = 0'"+rental_status+'WHERE id = "'+returnid+'"'
 
             print(sql)
@@ -251,10 +253,14 @@ def dbconn(qerytype, data):
 
         #クエリ発行
         if qerytype == RENTAL:
-            cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,rental_start_dt,rentalid))
+            #cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,rental_start_dt,rentalid))
+            cur.execute(sql,(rental_status,rental_start_dt,rentalid))
+
             conn.commit()
         elif qerytype == RETURN:
-            cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,update_dt,returnid))
+            #cur.execute(sql,(rental_status,rental_user_name,rental_start_dt,rental_end_plan_dt,update_dt,returnid))
+            cur.execute(sql,(rental_status,update_dt,returnid))
+
             conn.commit()
         else:
             cur.execute(sql)

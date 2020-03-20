@@ -247,7 +247,6 @@ $(function(){
 //rentalCheck
 $(function() {
   $(document).on('click','.rentalCheck',function() {
-    sflag = 1;
     id =  $(this).attr("value");
     console.log('data');
     console.log(id);
@@ -262,6 +261,13 @@ $(function(){
       console.log("click")
       id = $(".rentalBook").val();
       InputEmail1 = $("#InputEmail1").val();
+      
+      if (InputEmail1 == null || InputEmail1 == "") {
+        $('#alert').append("<div id='myAlert' class='alert alert-danger alert-dismissible fade show' role='alert'><strong>注意!</strong>　Emailは必須です。<button type='button' class='close' data-dismiss='alert' aria-label='閉じる'><span aria-hidden='true'>&times;</span></button></div>");
+        console.log("InputEmail1 null")
+        return allBooks()
+      }
+
       inputDate = $("#inputDate").val();
       var request = {
         'id': id
@@ -272,6 +278,13 @@ $(function(){
       rentalBook(request);
   });
 });
+
+
+//alert
+$("#myAlert").on('click',function(){
+  $("#myAlert").alert();
+});
+
 
 //rentalInfo
 $(function() {
@@ -298,3 +311,22 @@ $(function(){
       returnBook(request);
   });
 });
+
+(function() {
+  'use strict';
+
+  window.addEventListener('load', function() {
+    // カスタムブートストラップ検証スタイルを適用するすべてのフォームを取得
+    var forms = document.getElementsByClassName('InputEmail1');
+    // ループして帰順を防ぐ
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();

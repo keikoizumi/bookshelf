@@ -21,16 +21,15 @@
 <body>
 
   <!-- nav配置 -->
-
   <nav class="navbar shadow sticky-top" style="background-color: white;">  
     <div class="navbar-brand ml-3"><img src="./static/img/ico/book_icon.png" width="70" height="60" alt="ロゴ"></div>
       <div class="mr-5" style="color: #6598c2;font-size:xx-large ;font-weight: 700;">
         <div class="float-right">Bookshelf</div>
       </div>
   </nav>
+  
   <!-- データ配置 -->
   <div class="container mt-4 pl-5 pr-5" style="background-color: white;">
-
     <div class="input-group pt-5 pb-5">
       <input id="key" type="text" class="form-control" placeholder="Book Name" aria-label="Search Book Name">
       <div class="input-group-append">
@@ -38,6 +37,8 @@
       </div>
     </div>
 
+    <div id="alert"></div>
+    
     <!-- テーブル配置 -->
     <div class="display-area">
       <div class="">
@@ -46,22 +47,22 @@
             <tr>
               <th>Area
                 <span data-toggle="tooltip" data-placement="top" title="click here">
-                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#areaInfo"></img>
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="15" height="15" alt="info" data-toggle="modal" data-target="#areaInfo"></img>
                 </span>
               </th>
               <th>Title
                 <span data-toggle="tooltip" data-placement="top" title="click here">
-                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#titleInfo"></img>
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="15" height="15" alt="info" data-toggle="modal" data-target="#titleInfo"></img>
                 </span>
               </th>
               <th>Status
                 <span data-toggle="tooltip" data-placement="top" title="click here">
-                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#statusInfo"></img>
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="15" height="15" alt="info" data-toggle="modal" data-target="#statusInfo"></img>
                 </span>
               </th>
               <th>Link
                 <span data-toggle="tooltip" data-placement="top" title="click here">
-                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="17" height="17" alt="info" data-toggle="modal" data-target="#linkInfo"></img>
+                  <img class="ml-2 cursorhand" src="./static/img/ico/info.jpeg" width="15" height="15" alt="info" data-toggle="modal" data-target="#linkInfo"></img>
                 </span>
               </th>
             </tr>
@@ -73,7 +74,7 @@
 
       <!-- モーダル部分始まり -->
  
-      <!-- モーダルの設定 -->
+      <!-- モーダルの設定 areaInfo -->
       <div class="modal fade" id="areaInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -90,7 +91,7 @@
           </div>
         </div>
       </div>
-
+      <!-- モーダルの設定 titleInfo-->
       <div class="modal fade" id="titleInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -106,7 +107,7 @@
           </div>
         </div>
       </div>
-
+      <!-- モーダルの設定 statusInfo-->
       <div class="modal fade" id="statusInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -125,7 +126,7 @@
           </div>
         </div>
       </div>
-
+      <!-- モーダルの設定 linkInfo-->
       <div class="modal fade" id="linkInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -144,7 +145,7 @@
           </div>
         </div>
       </div>
-
+      <!-- モーダルの設定 rentalInfo-->
       <div class="modal fade" id="rentalInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -164,7 +165,7 @@
           </div>
         </div>
       </div>
-
+      <!-- モーダルの設定 rentalregistration-->
       <div class="modal fade" id="rentalregistration" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -199,7 +200,7 @@
     </div>
 
 
-      <!-- モーダル部分終わり -->
+    <!-- モーダル部分終わり -->
       
     <!-- カー セル -->
 
@@ -213,7 +214,7 @@
           <td>
             <div class="carcell">
               <div class="">
-                <div class="carousel slide" data-ride="carousel">
+               <!--   <div class="carousel slide" data-ride="carousel">-->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                       <!--<p style="width: 250px">【図解】コレ1枚でわかる最新ITトレンド[新装改訂3版]</p>-->
@@ -235,7 +236,7 @@
           <td>
             <div class="carcell">
               <div class="">
-                <div class="carousel slide" data-ride="carousel">
+                <!--<div class="carousel slide" data-ride="carousel">-->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                        <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
@@ -253,7 +254,7 @@
           <td>
             <div class="carcell">
               <div class="">
-                <div class="carousel slide" data-ride="carousel">
+                 <!--<div class="carousel slide" data-ride="carousel">-->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                        <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
@@ -271,7 +272,7 @@
           <td>
             <div class="carcell">
               <div class="">
-                <div class="carousel slide" data-ride="carousel">
+                <!-- <div class="carousel slide" data-ride="carousel">-->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                        <!--<p style="width: 250px">作るもの・作る人・作り方から学ぶ 採用・人事担当者のためのITエンジニアリングの基本がわかる本</p>-->
